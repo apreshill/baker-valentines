@@ -93,6 +93,7 @@ knitted <- list(
 )
 ```
 
-Reported prepared on `r knitted$when` from ``r knitted$where`` 
-with knitr version `r knitted$with` `r emo::ji('happy')`. 
-Read more about [`rmarkdown::render()`](`r knitted$doc_url`). 
+
+```{glue data=knitted}
+Report prepared on {when} from `{where}` with knitr version {with} {emo::ji("happy")}. Read more about [`rmarkdown::render()`]({doc_url}).
+```
