@@ -1,0 +1,98 @@
+---
+title: "A valentine for `r params$send_to$first`"
+subtitle: "Yours truly, `r params$sent_from$first`"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: flatly
+knit: source("_render.R")$value
+params:
+  send_to:
+    value:
+      first: "Annetha"
+      last: "Mills"
+  sent_from:
+    value:
+      first: "Mary"
+      last: "Berry"
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(bakeoff)
+library(epoxy)
+send_to <- baker_results %>% 
+  filter(baker_first == params$send_to$first & baker_last == params$send_to$last)
+index_baker <- send_to$baker
+your_bakes <- challenge_results %>% 
+  filter(baker == index_baker) %>% 
+  drop_na(showstopper)
+```
+
+### To: 
+
+```{glue data=params$send_to}
+{first} {last}
+```
+
+### From:
+
+```{glue data=params$sent_from}
+{first} {last}
+```
+
+---
+
+```{glue data=send_to}
+{baker}, {baker}, you baked your heart out.
+
+You were star baker {star_baker} times.
+
+We met you on {first_date_appeared}.
+
+After {total_episodes_appeared} episodes, we said our goodbyes.
+```
+
+
+You didn't win, but that is ok.
+
+You created x bakes, but then went away.
+
+After x episodes, 
+
+Your showstoppers really blew us away:
+
+```{glue data=your_bakes}
+- {showstopper}
+```
+
+And your signature bakes- we want one every Sunday!
+
+```{glue data=your_bakes}
+- {signature}
+```
+
+You brought us great joy, we'll miss you, it's true.
+
+Please keep on baking- without your bakes we'd be blue!
+
+---
+
+```{r comment="#"}
+rmarkdown::metadata
+```
+
+See: https://www.tjmahr.com/lists-knitr-secret-weapon/
+
+```{r}
+knitted <- list(
+  when = format(Sys.Date()),
+  where = knitr::current_input(),
+  with = packageVersion("knitr"),
+  doc_url = downlit::autolink_url("rmarkdown::render()")
+)
+```
+
+Reported prepared on `r knitted$when` from ``r knitted$where`` 
+with knitr version `r knitted$with` `r emo::ji('happy')`. 
+Read more about [`rmarkdown::render()`](`r knitted$doc_url`). 
