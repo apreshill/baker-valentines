@@ -1,11 +1,12 @@
 ---
-title: A valentine for `r params$send_to$first`
+title: "A valentine for `r params$send_to$first`"
 subtitle: Yours truly, `r params$sent_from$first`
 date: "`r Sys.Date()`"
 output: 
   html_document:
     theme: flatly
-#knit: source("_render_batch.R")$value
+    keep_md: true
+#knit: source("_render_single.R")$value
 params:
   my_valentine: "Nothing matters"
   send_to:
