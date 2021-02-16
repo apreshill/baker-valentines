@@ -10,7 +10,7 @@ function(input, ...) {
     input = input,
     output_file = glue::glue("valentine-for-{.x$first}.html"),
     params = list(send_to = {.x},
-                  sent_from = list(first = "Alison", last = "Hill"))
+                  sent_from = list(first = "Therese", last = "Anders"))
     )
   )
 }
