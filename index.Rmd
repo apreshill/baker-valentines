@@ -1,5 +1,5 @@
 ---
-title: "A valentine for `r params$send_to$first`"
+title: "`r params$my_valentine`"
 subtitle: "Yours truly, `r params$sent_from$first`"
 date: "`r Sys.Date()`"
 output: 
@@ -7,6 +7,7 @@ output:
     theme: flatly
 knit: source("_render_batch.R")$value
 params:
+  my_valentine: "Nothing matters"
   send_to:
     value:
       first: "Annetha"
