@@ -1,22 +1,22 @@
 ---
-title: "A valentine for `r params$send_to$first`"
-subtitle: Yours truly, `r params$sent_from$first`
+title: "`r params$my_valentine`"
+subtitle: "Yours truly, `r params$sent_from$given`"
 date: "`r Sys.Date()`"
 output: 
   html_document:
     theme: flatly
-    keep_md: true
-#knit: source("_render_single.R")$value
+knit: source("_render_from.R")$value
 params:
   my_valentine: "Nothing matters"
+  from_group: NULL
   send_to:
     value:
-      first: "Annetha"
-      last: "Mills"
+      given: "Annetha"
+      family: "Mills"
   sent_from:
     value:
-      first: "Mary"
-      last: "Berry"
+      given: "Mary"
+      family: "Berry"
 ---
 
 ```{r include=FALSE}
@@ -24,7 +24,7 @@ library(tidyverse)
 library(bakeoff)
 library(epoxy)
 send_to <- baker_results %>% 
-  filter(baker_first == params$send_to$first & baker_last == params$send_to$last)
+  filter(baker_first == params$send_to$given & baker_last == params$send_to$family)
 index_baker <- send_to$baker
 your_bakes <- challenge_results %>% 
   filter(baker == index_baker) %>% 
@@ -34,14 +34,25 @@ your_bakes <- challenge_results %>%
 ### To: 
 
 ```{glue data=params$send_to}
-{first} {last}
+{given} {family}
 ```
 
 ### From:
 
 ```{glue data=params$sent_from}
-{first} {last}
+{given} {family}
 ```
+
+```{r include=FALSE}
+is_from_group <- ifelse(is.null(params$from_group), FALSE, TRUE)
+```
+
+```{r eval=is_from_group, echo=FALSE}
+group <- purrr::flatten_dfr(params$from_group)
+```
+
+
+
 
 ---
 
